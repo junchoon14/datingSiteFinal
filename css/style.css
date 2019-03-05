@@ -1,0 +1,110 @@
+body {
+  background-image: url('https://drive.google.com/uc?export=download&id=1KwqsiZG7t1p-nUHiIMHc3_QR_OAxyOBB');
+}
+
+.clearfix::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/*------- Navigation -----------*/
+.nav-link {
+  margin-left: 10px;
+}
+
+.white {
+  color: #fff;
+}
+
+/*------- Mate Card -----------*/
+.card-img {
+  border-radius: 0 0 3px 3px;
+}
+
+.card-mark {
+position: absolute;
+top: 1%;
+left: 1%;
+z-index: 3;
+width: 15%;
+border-radius: 17px;
+}
+
+.heart-img:hover {
+  background-color: rgb(233, 145, 145);
+}
+
+.favorMate {
+  background-color: #fd4545;
+}
+
+.gender {
+  position: absolute;
+  top: 70%;
+  width: 5px;
+  height: 30%;
+  z-index: 3;
+  border-radius: 0 0 0 3px;
+}
+
+.bg-male {
+  background-color: #600e97;
+}
+
+.bg-female {
+  background-color: #a81d86;
+}
+
+.card-body {
+  width: 100%;
+  height: 30%;
+  color: #fff;
+  background-color: rgba(0.5, 0.5, 0.5, 0.5);
+  position: absolute;
+  top: 70%;
+  z-index: 2;
+  padding: 5px 0 0 15px;
+  border-radius: 0 0 3px 3px;
+}
+
+.age-region {
+  color: #f3f3f3;
+  font-size: 5px;
+}
+
+/*------- Pagination -----------*/
+.page-link {
+  color: #7a2d3a;
+}
+
+/*------- display mode: list -----------*/
+.list {
+  width: 100%;
+}
+
+.list-group-item {
+  margin-left: 10px;
+}
+
+.list-title {
+  border-bottom: 1px solid rgb(97, 39, 39);
+}
+
+.item-img {
+  border: 3px solid rgb(97, 39, 39);
+  width: 100px;
+}
+
+.list-mark {
+  width: 50px;
+  border-radius: 25px;
+}
+
+.list-content-1>p, .list-content-2>p {
+  margin: 0;
+}
