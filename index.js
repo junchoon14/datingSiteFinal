@@ -119,8 +119,7 @@
     }
   })
 
-  /////////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////// Functions /////////////////////////////////
+  ////////////////////////////////////////////////////////
 
   // add mate to favorite list
   function addFavoriteItem(id) {
@@ -279,7 +278,7 @@
       console.log(data)
 
       // insert data into modal ui
-      modalTitle.textContent = data.name + " " + data.surname
+      modalTitle.textContent = `${mate.name} ${mate.surname}`
       modalImage.innerHTML = `<img src="${data.avatar}" class="img-fluid user-img" alt="Responsive image"> `
       modalDate.textContent = `Release at: ${date} `
       modalGender.textContent = `${data.gender} `

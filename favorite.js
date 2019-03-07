@@ -1,6 +1,6 @@
 (function () {
   const heartImg = 'https://drive.google.com/uc?export=download&id=1B0aCopuqw6-zZXz0WkemAb9FjqVP5tuc'
-  const favorData = JSON.parse(localStorage.getItem('favoriteMates')) || []
+  const data = JSON.parse(localStorage.getItem('favoriteMates')) || []
   let maleData = []
   let femaleData = []
   // searchbar
@@ -25,7 +25,7 @@
   const pagination = document.getElementById('pagination')
   const ITEM_PER_PAGE = 12
 
-  displayDataList(favorData)
+  displayDataList(data)
 
   // listen to navigation
   menu.addEventListener('click', (event) => {
@@ -55,6 +55,17 @@
     console.log(results)
     getTotalPages(results)
     getPageData(1, results)
+  })
+
+  // listen to display mode switch
+  displayModeSwitch.addEventListener('click', event => {
+    console.log(event.target)
+    if (event.target.matches('.show-card')) {
+      localStorage.setItem('display', 'card')
+    } else if (event.target.matches('.show-list')) {
+      localStorage.setItem('display', 'list')
+    }
+    displayDataList(data)
   })
 
   // listen to card image to get mate information
