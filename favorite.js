@@ -1,14 +1,17 @@
 (function () {
-  // new variable
-  const BASE_URL = 'https://lighthouse-user-api.herokuapp.com/'
-  const INDEX_URL = BASE_URL + 'api/v1/users/'
   const heartImg = 'https://drive.google.com/uc?export=download&id=1B0aCopuqw6-zZXz0WkemAb9FjqVP5tuc'
-  const data = JSON.parse(localStorage.getItem('favoriteMates')) || []
-  const menu = document.getElementById('menu')
-  const item = menu.children
+  const favorData = JSON.parse(localStorage.getItem('favoriteMates')) || []
+  let maleData = []
+  let femaleData = []
+  // searchbar
   const searchBtn = document.getElementById('submit-search')
   const searchInput = document.getElementById('search')
+  // display mode
+  const displayModeSwitch = document.getElementById('display-switch')
+  // navbar
+  const menu = document.getElementById('menu')
   const dataPanel = document.getElementById('data-panel')
+  // modal
   const modalTitle = document.getElementById('show-mate-title')
   const modalImage = document.getElementById('show-mate-image')
   const modalDate = document.getElementById('show-mate-date')
@@ -17,8 +20,12 @@
   const modalRegion = document.getElementById('show-mate-region')
   const modalBirthday = document.getElementById('show-mate-birthday')
   const modalEmail = document.getElementById('show-mate-email')
+  // pagination
+  let paginationData = []
+  const pagination = document.getElementById('pagination')
+  const ITEM_PER_PAGE = 12
 
-  displayDataList(data)
+  displayDataList(favorData)
 
   // listen to navigation
   menu.addEventListener('click', (event) => {
@@ -43,10 +50,11 @@
   searchBtn.addEventListener('click', (event) => {
     let results = []
     event.preventDefault()
-    const regex = new RegExp(searchInput.nodeValue, 'i')
-    results = data.filter(person => person.name.match(regex))
+    const regex = new RegExp(searchInput.value, 'i')
+    results = data.filter(person => person.name.match(regex) || person.surname.match(regex))
     console.log(results)
-    displayDataList(results)
+    getTotalPages(results)
+    getPageData(1, results)
   })
 
   // listen to card image to get mate information
@@ -71,19 +79,9 @@
     }
   })
 
-  /////////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////// Functions /////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////
 
-  // add mate to favorite list
-  function addFavoriteItem(id) {
-    const list = JSON.parse(localStorage.getItem('favoriteMates')) || []
-    const mate = data.find(person => person.id === Number(id))
-    list.push(mate)
-    localStorage.setItem('favoriteMates', JSON.stringify(list))
-    alert(`Added ${mate.name} to your favorite list!`)
-  }
-
-  // removie mate and update localStorage
+  // remove mate and update localStorage
   function removeFavoriteItem(id) {
     const list = JSON.parse(localStorage.getItem('favoriteMates')) || []
     const mate = list.find(person => person.id === Number(id))
@@ -210,28 +208,19 @@
   }
 
   // show detail information in modal
-  function showMate(id) {
-    // set request url
-    const url = INDEX_URL + id
-    console.log(url)
-
-    // send request to show api
-    axios.get(url).then(response => {
-      const data = response.data
-      let date = new Date(data.updated_at).toLocaleString()
-      console.log(response.data)
-      console.log(data)
-
-      // insert data into modal ui
-      modalTitle.textContent = data.name + " " + data.surname
-      modalImage.innerHTML = `<img src="${data.avatar}" class="img-fluid user-img" alt="Responsive image">`
-      modalDate.textContent = `Release at : ${date}`
-      modalGender.textContent = `${data.gender}`
-      modalAge.textContent = `${data.age}`
-      modalRegion.textContent = `${data.region}`
-      modalBirthday.textContent = `${data.birthday}`
-      modalEmail.textContent = `${data.email}`
-    })
+  function showMateInfo(id) {
+    const list = JSON.parse(localStorage.getItem('favoriteMates')) || []
+    const mate = list.find(person => person.id === Number(id))
+    let date = new Date(mate.updated_at).toLocaleString()
+    // insert data into modal ui
+    modalTitle.textContent = `${mate.name} ${mate.surname}`
+    modalImage.innerHTML = `<img src="${mate.avatar}" class="img-fluid user-img" alt="Responsive image">`
+    modalDate.textContent = `Release at : ${date}`
+    modalGender.textContent = `${mate.gender}`
+    modalAge.textContent = `${mate.age}`
+    modalRegion.textContent = `${mate.region}`
+    modalBirthday.textContent = `${mate.birthday}`
+    modalEmail.textContent = `${mate.email}`
   }
 
   // get total pages
